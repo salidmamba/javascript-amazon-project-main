@@ -70,9 +70,36 @@ products.forEach((items)=>{
           Added
         </div>
 
-        <button class="add-to-cart-button button-primary">
+        <button class="add-to-cart-button button-primary cart-js" data-product-name="${items.name}">
           Add to Cart
         </button>
       </div>`;
 });
 document.querySelector(".grid-html").innerHTML = productHtml;
+
+document.querySelectorAll(".cart-js").forEach((button)=>{
+  button.addEventListener('click', ()=>{
+    const productNAME = button.dataset.productName; //the productName here is gotten from data-product-name and it was renamed by the program after running.
+   
+    let matched; //an empty value for matched items.
+    cart.forEach((item)=>{
+      if (productNAME === item.productName){ //if the new selceted item is equal to old selected item...
+        matched = item; //... then it is assigned matched since they are matched. 
+      }
+    })
+
+    if(matched){
+      matched.quantity += 1; //recall that matched is the name for the object i.e matched.productName.
+    }else {
+      cart.push({
+        productName: productNAME,
+        quantity: 1
+      });
+    }
+    
+    
+    console.log(cart);
+  })
+});
+
+
