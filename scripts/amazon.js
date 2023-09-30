@@ -70,7 +70,7 @@ products.forEach((items)=>{
           Added
         </div>
 
-        <button class="add-to-cart-button button-primary cart-js" data-product-name="${items.name}">
+        <button class="add-to-cart-button button-primary cart-js" data-product-id="${items.id}">
           Add to Cart
         </button>
       </div>`;
@@ -79,7 +79,7 @@ document.querySelector(".grid-html").innerHTML = productHtml;
 
 document.querySelectorAll(".cart-js").forEach((button)=>{
   button.addEventListener('click', ()=>{
-    const productNAME = button.dataset.productName; //the productName here is gotten from data-product-name and it was renamed by the program after running.
+    const productNAME = button.dataset.productId; //the productId ( or productName )here is gotten from data-product-id ( or data-product-name) and it was renamed by the program after running.
    
     let matched; //an empty value for matched items.
     cart.forEach((item)=>{
@@ -92,12 +92,20 @@ document.querySelectorAll(".cart-js").forEach((button)=>{
       matched.quantity += 1; //recall that matched is the name for the object i.e matched.productName.
     }else {
       cart.push({
-        productName: productNAME,
+        productName: productNAME, //you can change the name behind every product if you ever get confused..
         quantity: 1
       });
     }
     
-    
+
+    let totalQuantity = 0;
+    cart.forEach((item)=>{
+      totalQuantity += item.quantity;
+    });
+
+    document.querySelector('.cart-quantity-js').innerHTML = totalQuantity;
+
+    console.log(`Total selected itmes is ${totalQuantity}`);
     console.log(cart);
   })
 });
