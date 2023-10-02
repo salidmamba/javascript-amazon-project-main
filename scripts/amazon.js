@@ -49,7 +49,7 @@ products.forEach((items)=>{
         </div>
 
         <div class="product-quantity-container">
-          <select>
+          <select class="quantity-select-js-${items.id}">
             <option selected value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -65,7 +65,7 @@ products.forEach((items)=>{
 
         <div class="product-spacer"></div>
 
-        <div class="added-to-cart">
+        <div class="added-to-cart added-to-cart-js-${items.id}">
           <img src="images/icons/checkmark.png">
           Added
         </div>
@@ -86,18 +86,22 @@ document.querySelectorAll(".cart-js").forEach((button)=>{
       if (productNAME === item.productName){ //if the new selceted item is equal to old selected item...
         matched = item; //... then it is assigned matched since they are matched. 
       }
-    })
+    });
+
+
+    const quantitySelector = document.querySelector(`.quantity-select-js-${productNAME}`); //line 92 and 93 is to extract value form select option and assign the val at which the cart increases on clicking addToCart.
+    const quantity = Number(quantitySelector.value);
 
     if(matched){
-      matched.quantity += 1; //recall that matched is the name for the object i.e matched.productName.
+      matched.quantity += quantity; //recall that matched is the name for the object i.e matched.productName.
     }else {
       cart.push({
-        productName: productNAME, //you can change the name behind every product if you ever get confused..
-        quantity: 1
+        productName: productNAME, //you can change the name behind every product to Id if you ever get confused..
+        quantity: quantity
       });
     }
     
-
+    //
     let totalQuantity = 0;
     cart.forEach((item)=>{
       totalQuantity += item.quantity;
@@ -105,9 +109,19 @@ document.querySelectorAll(".cart-js").forEach((button)=>{
 
     document.querySelector('.cart-quantity-js').innerHTML = totalQuantity;
 
+
+    //
+    const addedMessage = document.querySelector(`.added-to-cart-js-${productNAME}`);
+    addedMessage.classList.add('added-to-cart-visible');
+    setTimeout(()=>{
+      addedMessage.classList.remove('added-to-cart-visible');
+    }, 2000);// to futher improve the features of this outcome, go to the link below (13m)
+
     console.log(`Total selected itmes is ${totalQuantity}`);
     console.log(cart);
-  })
+  });
 });
+
+//https://github.com/SuperSimpleDev/javascript-course/blob/main/1-exercise-solutions/lesson-13/13c.md
 
 
