@@ -80,39 +80,49 @@ products.forEach((items)=>{
 });
 document.querySelector(".grid-html").innerHTML = productHtml;
 
-document.querySelectorAll(".cart-js").forEach((button)=>{
-  button.addEventListener('click', ()=>{
-    const productNAME = button.dataset.productId; //the productId ( or productName )here is gotten from data-product-id ( or data-product-name) and it was renamed by the program after running.
-   
-    let matched; //an empty value for matched items.
-    cart.forEach((item)=>{
-      if (productNAME === item.productName){ //if the new selceted item is equal to old selected item...
-        matched = item; //... then it is assigned matched since they are matched. 
-      }
-    });
-
-
-    const quantitySelector = document.querySelector(`.quantity-select-js-${productNAME}`); //line 92 and 93 is to extract value form select option and assign the val at which the cart increases on clicking addToCart.
-    const quantity = Number(quantitySelector.value);
-
-    if(matched){
-      matched.quantity += quantity; //recall that matched is the name for the object i.e matched.productName.
-    }else {
-      cart.push({
-        productName: productNAME, //you can change the name behind every product to Id if you ever get confused..
-        quantity: quantity
-      });
+//
+const addToCart = (productNAME)=>{
+  
+  let matched; //an empty value for matched items.
+  cart.forEach((item)=>{
+    if (productNAME === item.productName){ //if the new selceted item is equal to old selected item...
+      matched = item; //... then it is assigned matched since they are matched. 
     }
-    
-    //
-    let totalQuantity = 0;
+  });
+
+
+  const quantitySelector = document.querySelector(`.quantity-select-js-${productNAME}`); //line 92 and 93 is to extract value form select option and assign the val at which the cart increases on clicking addToCart.
+  const quantity = Number(quantitySelector.value);
+
+  if(matched){
+    matched.quantity += quantity; //recall that matched is the name for the object i.e matched.productName.
+  }else {
+    cart.push({
+      productName: productNAME, //you can change the name behind every product to Id if you ever get confused.. or to avoid naming conflict for same product from different brands.
+      quantity: quantity
+    });
+  }
+};
+
+//
+const updateCartQuantity = ()=>{
+  let totalQuantity = 0;
     cart.forEach((item)=>{
       totalQuantity += item.quantity;
     });
 
-    document.querySelector('.cart-quantity-js').innerHTML = totalQuantity;
+    document.querySelector('.cart-quantity-js').innerHTML = totalQuantity;  
+};
+//
 
+document.querySelectorAll(".cart-js").forEach((button)=>{
+  button.addEventListener('click', ()=>{
+    const productNAME = button.dataset.productId; //the productId ( or productName )here is gotten from data-product-id ( or data-product-name) and it was renamed by the program after running(Kebba casing).
+    
+    addToCart(productNAME);
 
+    updateCartQuantity();
+    //
     //
     const addedMessage = document.querySelector(`.added-to-cart-js-${productNAME}`);
     addedMessage.classList.add('added-to-cart-visible');
@@ -120,8 +130,9 @@ document.querySelectorAll(".cart-js").forEach((button)=>{
       addedMessage.classList.remove('added-to-cart-visible');
     }, 2000);// to futher improve the features of this outcome, go to the link below (13m)
 
-    console.log(`Total selected itmes is ${totalQuantity}`);
-    console.log(cart);
+    //console.log(`Total selected itmes is ${totalQuantity}`);
+    //console.log(cart);
+    
   });
 });
 
