@@ -94,9 +94,9 @@ const updateCartQuantity = ()=>{
 
 document.querySelectorAll(".cart-js").forEach((button)=>{
   button.addEventListener('click', ()=>{
-    const productNAME = button.dataset.productId; //the productId ( or productName )here is gotten from data-product-id ( or data-product-name) and it was renamed by the program after running(Kebba casing).
+    const productId = button.dataset.productId; //the productId ( or productName )here is gotten from data-product-id ( or data-product-name) and it was renamed by the program after running(Kebba casing).
     
-    addToCart(productNAME);
+    addToCart(productId);
 
     updateCartQuantity();
     //
