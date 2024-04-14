@@ -1,4 +1,4 @@
-import { cart } from "./cart.js";
+import { cart, removeFromCart } from "./cart.js";
 import { products } from "../data/products.js";
 
 let checkoutSummaryHtml = '';
@@ -16,7 +16,7 @@ cart.forEach((cartItems) =>{
 
 
       checkoutSummaryHtml +=`
-            <div class="cart-item-container">
+            <div class="cart-item-container js-cart-container-${matchingProduct.id}">
                   <div class="delivery-date">
                   Delivery date: Tuesday, June 21
                   </div>
@@ -30,7 +30,7 @@ cart.forEach((cartItems) =>{
                         ${matchingProduct.name}
                   </div>
                   <div class="product-price">
-                        $${(matchingProduct.priceCents)/100}
+                        $${(matchingProduct.priceCents/100).toFixed(2)}
                   </div>
                   <div class="product-quantity">
                         <span>
@@ -39,7 +39,7 @@ cart.forEach((cartItems) =>{
                         <span class="update-quantity-link link-primary">
                         Update
                         </span>
-                        <span class="delete-quantity-link link-primary">
+                        <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${matchingProduct.id}">
                         Delete
                         </span>
                   </div>
@@ -97,3 +97,16 @@ cart.forEach((cartItems) =>{
 document.querySelector(".js-order-summary").innerHTML = checkoutSummaryHtml;
 
 //console.log(checkoutSummaryHtml);
+
+//To delete a product from checkout summary:
+document.querySelectorAll('.js-delete-quantity-link').forEach((product)=>{
+      product.addEventListener('click', ()=>{
+            const productId = product.dataset.productId;
+            removeFromCart(productId);
+            //to remove html form page:
+            const productHtml = document.querySelector(`.js-cart-container-${productId}`);
+            productHtml.remove();
+
+            console.log(cart);
+      });
+});

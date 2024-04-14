@@ -1,4 +1,4 @@
-import { cart, addToCart } from "./cart.js";
+import { cart, addToCart} from "./cart.js";
 import { products } from "../data/products.js";
 
 // const products = [{
@@ -101,7 +101,7 @@ document.querySelectorAll(".cart-js").forEach((button)=>{
     updateCartQuantity();
     //
     //
-    const addedMessage = document.querySelector(`.added-to-cart-js-${productNAME}`);
+    const addedMessage = document.querySelector(`.added-to-cart-js-${productId}`);
     addedMessage.classList.add('added-to-cart-visible');
     setTimeout(()=>{
       addedMessage.classList.remove('added-to-cart-visible');

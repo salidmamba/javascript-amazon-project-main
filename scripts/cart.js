@@ -1,19 +1,27 @@
 export{cart};
 
 
-let cart = [
-      {
-            productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-            quantity: 1
-      },
-      {
-            productId:"15b6fc6f-327a-4ec4-896f-486349e85a3d",
-            quantity: 1
-      }
+let cart = JSON.parse(localStorage.getItem('cart'));
+if (!cart){
+  cart = [
+    {
+          productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+          quantity: 1
+    },
+    {
+          productId:"15b6fc6f-327a-4ec4-896f-486349e85a3d",
+          quantity: 1
+    }
 
 ];
+};
 
-export const addToCart = (productNAME)=>{
+
+function saveToStorge() {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+//
+export const addToCart = (productId)=>{
   
       let matched; //an empty value for matched items.
       cart.forEach((cartItem)=>{
@@ -23,7 +31,7 @@ export const addToCart = (productNAME)=>{
       });
     
     
-      const quantitySelector = document.querySelector(`.quantity-select-js-${productNAME}`); //line 92 and 93 is to extract value form select option and assign the val at which the cart increases on clicking addToCart.
+      const quantitySelector = document.querySelector(`.quantity-select-js-${productId}`); //line 92 and 93 is to extract value form select option and assign the val at which the cart increases on clicking addToCart.
       const quantity = Number(quantitySelector.value);
     
       if(matched){
@@ -34,4 +42,23 @@ export const addToCart = (productNAME)=>{
             quantity: quantity
         });
       }
+
+      saveToStorge();
     };
+//
+
+
+//
+export const removeFromCart = (productId)=>{
+  const newCart=[]; 
+  
+  cart.forEach((cartItem)=>{
+    if(cartItem.productId !== productId){
+      newCart.push(cartItem);
+    };
+  });
+
+  cart = newCart;
+
+  saveToStorge();
+};
