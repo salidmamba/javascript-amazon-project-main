@@ -106,7 +106,26 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((product)=>{
             //to remove html form page:
             const productHtml = document.querySelector(`.js-cart-container-${productId}`);
             productHtml.remove();
+            updateCartQuantity();
 
-            console.log(cart);
+            //console.log(cart);
       });
 });
+
+function updateCartQuantity (){
+      let totalQuantity = 0;
+      cart.forEach((cartItem) => {
+      totalQuantity += cartItem.quantity;
+      });
+
+
+      if(totalQuantity<2){
+            document.querySelector(".js-return-to-home-link").textContent = totalQuantity+" Item"; 
+      }else{
+            document.querySelector(".js-return-to-home-link").textContent = totalQuantity+" Items";
+      };
+};
+
+updateCartQuantity();
+
+

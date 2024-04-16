@@ -113,6 +113,8 @@ document.querySelectorAll(".cart-js").forEach((button)=>{
   });
 });
 
+updateCartQuantity();
+
 //https://github.com/SuperSimpleDev/javascript-course/blob/main/1-exercise-solutions/lesson-13/13c.md
 
 
